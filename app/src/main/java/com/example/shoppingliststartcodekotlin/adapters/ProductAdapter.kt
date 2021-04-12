@@ -1,31 +1,38 @@
 package com.example.shoppingliststartcodekotlin.adapters
 
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.shoppingliststartcodekotlin.R
 import com.example.shoppingliststartcodekotlin.data.Product
+import com.example.shoppingliststartcodekotlin.data.Repository
 
 
-class ProductAdapter(var products: MutableList<Product>) :
-    RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
+class ProductAdapter(var products: MutableList<Product>) : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductAdapter.ViewHolder {
-        TODO("Not yet implemented")
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.product_layout, parent, false)
+        return ViewHolder(view)
+
     }
 
-    override fun onBindViewHolder(holder: ProductAdapter.ViewHolder, position: Int) {
-        TODO("Not yet implemented")
+    override fun onBindViewHolder(viewHolder: ViewHolder, i: Int) {
+        viewHolder.productTitle.text = products[i].toString()
+
+
     }
 
-    override fun getItemCount(): Int {
-        TODO("Not yet implemented")
-    }
+    override fun getItemCount(): Int = products.size
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        //here you need to to do stuff also - to back to the exercises
-        //about recyclerviews and you can use approach that were used
-        //in the exercise about recyclerviews from the book (lesson 3)
-        //if you did not do that exercise - then first do that exercise in
-        //a seperate project
+
+        var productTitle: TextView = itemView.findViewById(R.id.textView_products)
 
     }
+
+
+
 }

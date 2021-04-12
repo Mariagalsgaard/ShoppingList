@@ -16,9 +16,23 @@ object Repository {
         return productListener
     }
 
-    fun createTestData()
+    private fun createTestData()
     {
+        //products.add(1, "")
         //add some products to the products list - for testing purposes
+
     }
 
+
+   fun addProduct(product:Product) {
+        //val product =
+    }
+
+
+    fun deleteProduct(index: Int) { // in the Repository
+        products.removeAt(index)
+    }
+
+
 }
+
