@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
     //you need to have an Adapter for the products
     private lateinit var adapter: ProductAdapter
     private val spinnerItems = arrayOf("Name", "Qty")
+    private val RESULT_CODE_PREFERENCES = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +40,12 @@ class MainActivity : AppCompatActivity() {
             updateUI()
         })
 
-        //The stuff for the spinner
+        //welcome message in a toast
+        val toast = Toast.makeText(this, "Welcome ${PreferenceHandler.getName(this)}", Toast.LENGTH_LONG)
+        toast.show()
+
+
+        //The spinner
         val adapter1 = ArrayAdapter(this,
                 android.R.layout.simple_spinner_dropdown_item, spinnerItems)
 
@@ -67,10 +73,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
     fun showaddproductdialogue(v: View) {
         val dialog = AddProductDialogue(::addproducts)
         dialog.show(supportFragmentManager, "addrangedialogfragment")
     }
+
 
     //Callback function from add/remove dialog
     private fun addproducts(title: String, qty: Int) {
@@ -86,7 +94,7 @@ class MainActivity : AppCompatActivity() {
         //update UI
     }
 
-    /*//converting list to string for sharing option
+/*  //converting list to string for sharing option
     private fun convertListToString(): String
     {
         var result = "";
@@ -100,13 +108,26 @@ class MainActivity : AppCompatActivity() {
     }*/
 
 
-
     private fun updateUI() {
         val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
         adapter = ProductAdapter(products)
         recyclerView.adapter = adapter
+    }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == RESULT_CODE_PREFERENCES)
+        //the code means we came back from settings
+        {
+            //I can can these methods like this, because they are static
+            val female = PreferenceHandler.isFemale(this)
+            val name = PreferenceHandler.getName(this)
+            val notifications = PreferenceHandler.useNotifications(this)
+            val message = "Welcome, $name, You are female? $female and you have notifications on? $notifications"
+            val toast = Toast.makeText(this, message, Toast.LENGTH_LONG)
+            toast.show()
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -137,8 +158,15 @@ class MainActivity : AppCompatActivity() {
                 val shareIntent = Intent.createChooser(sendIntent, "Write title...")
                 startActivity(shareIntent)
                 return true
-            } else ->
-            return false
+            }
+            R.id.action_settings -> {
+                //Start settingsactivity and listen to result
+                val intent = Intent(this, SettingsActivity::class.java)
+                startActivityForResult(intent, RESULT_CODE_PREFERENCES)
+                return true
+            }
+            else ->
+                return false
         }
-
-}}
+    }
+}

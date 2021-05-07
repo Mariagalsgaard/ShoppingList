@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+
+<androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/card_view"
+    android:layout_margin="5dp"
+    app:cardBackgroundColor="#efefef"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="3dp"
+    app:contentPadding="4dp"
+    android:foreground="?selectableItemBackground"
+    android:clickable="true" >
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -17,10 +29,11 @@
 
         <TextView
             android:id="@+id/textView_products"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/this_is_a_product"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.326"
@@ -29,15 +42,30 @@
             app:layout_constraintVertical_bias="0.148" />
 
         <TextView
+            android:id="@+id/stk_product_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/stk"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView_products"
+            app:layout_constraintEnd_toStartOf="@+id/textView_products"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView_products" />
+
+        <TextView
             android:id="@+id/qty_product_textview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/qty_product"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/textView_products"
             app:layout_constraintEnd_toStartOf="@+id/textView_products"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textView_products" />
+
+
 
         <ImageView
             android:id="@+id/imageView_product_delete"
@@ -50,3 +78,4 @@
             app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
