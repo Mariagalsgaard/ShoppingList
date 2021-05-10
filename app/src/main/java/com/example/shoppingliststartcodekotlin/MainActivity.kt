@@ -94,18 +94,16 @@ class MainActivity : AppCompatActivity() {
         //update UI
     }
 
-/*  //converting list to string for sharing option
+  //converting list to string for sharing option
     private fun convertListToString(): String
     {
         var result = "";
-        for (var i = 0; i < adapter.getCount(); i++)
+        for (product in Repository.products)
         {
-            var p = (Product) adapter.getItem(i);
-            result = result + p.toString() + "\n"; //adding newline
-
+            result += product.toString()
         }
         return result;
-    }*/
+    }
 
 
     private fun updateUI() {
@@ -115,6 +113,7 @@ class MainActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
     }
 
+    //Settings stuff
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == RESULT_CODE_PREFERENCES)
         //the code means we came back from settings
@@ -137,25 +136,22 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+        // Handle action bar item clicks here.
         Log.d("icon_pressed", "${item.itemId}")
         when (item.itemId) {
             R.id.item_delete -> {
                 val dialog = PopupDialogue(::deleteAllProducts, true)
                 dialog.show(supportFragmentManager, "yesnodialogfragment")
-                //deleteAllProducts()
                 return true
             }
             R.id.item_share -> {
                 //Share content
                 val sendIntent: Intent = Intent().apply {
                     action = Intent.ACTION_SEND
-                    putExtra(Intent.EXTRA_TEXT, "Share your shoppinglist: $products")
+                    putExtra(Intent.EXTRA_TEXT, "Share your shoppinglist: ${convertListToString()}")
                     type = "text/plain"
                 }
-                val shareIntent = Intent.createChooser(sendIntent, "Write title...")
+                val shareIntent = Intent.createChooser(sendIntent, "Shopping list products")
                 startActivity(shareIntent)
                 return true
             }

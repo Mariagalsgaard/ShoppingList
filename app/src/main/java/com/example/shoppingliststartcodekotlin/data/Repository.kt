@@ -2,6 +2,8 @@ package com.example.shoppingliststartcodekotlin.data
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.example.shoppingliststartcodekotlin.R
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -71,6 +73,7 @@ object Repository {
            db = Firebase.firestore
            val product = products[index]
 
+
            //delete from firebase
            db.collection("products").document(product.id).delete().addOnSuccessListener {
                Log.d("Snapshot", "DocumentSnapshot with id: ${product.id} successfully deleted!")
@@ -80,19 +83,24 @@ object Repository {
 
            products.removeAt(index)
            productListener.value = products
+
+
        }
 
 
     fun deleteAllProducts(add: Boolean) {
+        db = Firebase.firestore
         val product = products.toString()
         if (add) {
-
+/*
             //delete from firebase
             db.collection("products").document(product).delete().addOnSuccessListener {
                 Log.d("Snapshot", "DocumentSnapshot with id: $product successfully deleted!")
             }
                     .addOnFailureListener{e ->
                         Log.w("Error", "Error deleting document", e) }
+
+ */
 
             products.clear()
             productListener.value = products
