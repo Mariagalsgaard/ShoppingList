@@ -27,4 +27,7 @@
     <string name="on">On</string>
     <string name="off">Off</string>
     <string name="stk">Qty:</string>
+    <string name="item_edit">edit product</string>
+    <string name="edit_your_product_here">Edit your product here:</string>
+    <string name="add_changes">Add Changes</string>
 </resources>

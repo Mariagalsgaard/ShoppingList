@@ -75,13 +75,13 @@ class MainActivity : AppCompatActivity() {
 
 
     fun showaddproductdialogue(v: View) {
-        val dialog = AddProductDialogue(::addproducts)
+        val dialog = AddProductDialogue(::addProducts)
         dialog.show(supportFragmentManager, "addrangedialogfragment")
     }
 
 
     //Callback function from add/remove dialog
-    private fun addproducts(title: String, qty: Int) {
+    private fun addProducts(title: String, qty: Int) {
         var modify = "add"
 
         val toast = Toast.makeText(
@@ -94,17 +94,38 @@ class MainActivity : AppCompatActivity() {
         //update UI
     }
 
-  //converting list to string for sharing option
+
+    //edit products
+    fun showEditProductDialogue(v: View) {
+        val dialog = EditProductDialogue(::editProducts)
+        dialog.show(supportFragmentManager, "addrangedialogfragment")
+    }
+
+    //Callback function from add/remove dialog
+    private fun editProducts(title: String, qty: Int) {
+        var modify = "add"
+
+        val toast = Toast.makeText(
+                this,
+                "You choose to $modify records starting from $title and ending at $qty",
+                Toast.LENGTH_LONG
+        )
+        toast.show()
+        //Change data
+        //update UI
+    }
+
+
+    //converting list to string for sharing option
     private fun convertListToString(): String
     {
         var result = "";
-        for (product in Repository.products)
+        for (product in products)
         {
-            result += product.toString()
+            result = result + product.toString()
         }
-        return result;
+        return result
     }
-
 
     private fun updateUI() {
         val layoutManager = LinearLayoutManager(this)
@@ -146,13 +167,21 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.item_share -> {
                 //Share content
-                val sendIntent: Intent = Intent().apply {
+                val text = convertListToString()
+                val sharingIntent = Intent(Intent.ACTION_SEND)
+                sharingIntent.type = "text/plain" //MIME-TYPE
+                sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Shared Data")
+                sharingIntent.putExtra(Intent.EXTRA_TEXT, text)
+                startActivity(Intent.createChooser(sharingIntent, "Share Using"))
+
+                /*val sendIntent: Intent = Intent().apply {
                     action = Intent.ACTION_SEND
                     putExtra(Intent.EXTRA_TEXT, "Share your shoppinglist: ${convertListToString()}")
                     type = "text/plain"
                 }
                 val shareIntent = Intent.createChooser(sendIntent, "Shopping list products")
-                startActivity(shareIntent)
+                startActivity(shareIntent)*/
+
                 return true
             }
             R.id.action_settings -> {

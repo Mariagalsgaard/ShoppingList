@@ -1,6 +1,7 @@
 package com.example.shoppingliststartcodekotlin.adapters
 
 import android.content.Context
+import android.media.Image
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -43,6 +44,7 @@ class ProductAdapter(var products: MutableList<Product>) : RecyclerView.Adapter<
         var productTitle: TextView = itemView.findViewById(R.id.textView_products)
         var itemQty: TextView = itemView.findViewById(R.id.qty_product_textview)
         var itemDelete: ImageView = itemView.findViewById(R.id.imageView_product_delete)
+        var itemEdit: ImageView = itemView.findViewById(R.id.imageView_product_edit)
 
 
         init {
@@ -69,6 +71,14 @@ class ProductAdapter(var products: MutableList<Product>) : RecyclerView.Adapter<
                 snackbar.show()
 
             }
+
+            /*itemEdit.setOnClickListener{v: View ->
+                val dialog = PopupDialogue(Repository::deleteAllProducts, true)
+                dialog.show(supportFragmentManager, "yesnodialogfragment")
+            }
+
+             */
+
         }
 
     }
