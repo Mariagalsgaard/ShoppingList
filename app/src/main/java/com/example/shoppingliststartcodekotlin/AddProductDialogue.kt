@@ -4,12 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.example.shoppingliststartcodekotlin.data.Product
 import com.example.shoppingliststartcodekotlin.data.Repository
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.addproductdialogue_layout.*
 import kotlinx.android.synthetic.main.addproductdialogue_layout.editText_Number1
 import kotlinx.android.synthetic.main.addproductdialogue_layout.editText_title1
 import kotlinx.android.synthetic.main.addproductdialogue_layout.view.*

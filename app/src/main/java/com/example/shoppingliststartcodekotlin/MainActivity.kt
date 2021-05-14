@@ -7,27 +7,21 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Toast
+import android.widget.*
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.FirebaseApp
 import com.example.shoppingliststartcodekotlin.adapters.ProductAdapter
-import com.example.shoppingliststartcodekotlin.data.Product
 import com.example.shoppingliststartcodekotlin.data.Repository
-import com.example.shoppingliststartcodekotlin.data.Repository.addProduct
 import com.example.shoppingliststartcodekotlin.data.Repository.deleteAllProducts
 import com.example.shoppingliststartcodekotlin.data.Repository.products
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.product_layout.*
 
 class MainActivity : AppCompatActivity() {
 
     //you need to have an Adapter for the products
     private lateinit var adapter: ProductAdapter
-    private val spinnerItems = arrayOf("Name", "Qty")
+    private val spinnerItems = arrayOf("Title", "Qty")
     private val RESULT_CODE_PREFERENCES = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,7 +52,7 @@ class MainActivity : AppCompatActivity() {
                                         position: Int, id: Long) {
                 //So this code is called when ever the spinner is clicked
                 if(position == 0) {
-                    Log.d("sorting","name chosen")
+                    Log.d("sorting","title chosen")
                     products.sortBy { it.name }
                     adapter.notifyDataSetChanged()
                 }else{
@@ -94,26 +88,22 @@ class MainActivity : AppCompatActivity() {
         //update UI
     }
 
-
-    //edit products
+/*
+    //Showing edit products dialogue
     fun showEditProductDialogue(v: View) {
         val dialog = EditProductDialogue(::editProducts)
         dialog.show(supportFragmentManager, "addrangedialogfragment")
     }
 
-    //Callback function from add/remove dialog
-    private fun editProducts(title: String, qty: Int) {
-        var modify = "add"
+    //callback function
+    private fun editProducts(product: Product) {
 
-        val toast = Toast.makeText(
-                this,
-                "You choose to $modify records starting from $title and ending at $qty",
-                Toast.LENGTH_LONG
-        )
-        toast.show()
+
         //Change data
         //update UI
     }
+*/
+
 
 
     //converting list to string for sharing option
@@ -122,7 +112,7 @@ class MainActivity : AppCompatActivity() {
         var result = "";
         for (product in products)
         {
-            result = result + product.toString()
+            result += product.toString()
         }
         return result
     }
@@ -130,7 +120,7 @@ class MainActivity : AppCompatActivity() {
     private fun updateUI() {
         val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
-        adapter = ProductAdapter(products)
+        adapter = ProductAdapter(products, this)
         recyclerView.adapter = adapter
     }
 
@@ -170,18 +160,8 @@ class MainActivity : AppCompatActivity() {
                 val text = convertListToString()
                 val sharingIntent = Intent(Intent.ACTION_SEND)
                 sharingIntent.type = "text/plain" //MIME-TYPE
-                sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Shared Data")
                 sharingIntent.putExtra(Intent.EXTRA_TEXT, text)
                 startActivity(Intent.createChooser(sharingIntent, "Share Using"))
-
-                /*val sendIntent: Intent = Intent().apply {
-                    action = Intent.ACTION_SEND
-                    putExtra(Intent.EXTRA_TEXT, "Share your shoppinglist: ${convertListToString()}")
-                    type = "text/plain"
-                }
-                val shareIntent = Intent.createChooser(sendIntent, "Shopping list products")
-                startActivity(shareIntent)*/
-
                 return true
             }
             R.id.action_settings -> {

@@ -1,29 +1,19 @@
 package com.example.shoppingliststartcodekotlin.adapters
 
+import android.app.AlertDialog
 import android.content.Context
-import android.media.Image
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.appcompat.view.menu.MenuView
-import androidx.core.content.ContextCompat.getSystemService
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
-import com.example.shoppingliststartcodekotlin.AddProductDialogue
-import com.example.shoppingliststartcodekotlin.MainActivity
-import com.example.shoppingliststartcodekotlin.PopupDialogue
 import com.example.shoppingliststartcodekotlin.R
 import com.example.shoppingliststartcodekotlin.data.Product
 import com.example.shoppingliststartcodekotlin.data.Repository
 import com.google.android.material.snackbar.Snackbar
 
 
-class ProductAdapter(var products: MutableList<Product>) : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
+class ProductAdapter(var products: MutableList<Product>, val c: Context) : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductAdapter.ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -69,18 +59,35 @@ class ProductAdapter(var products: MutableList<Product>) : RecyclerView.Adapter<
                         }
 
                 snackbar.show()
-
             }
 
-            /*itemEdit.setOnClickListener{v: View ->
-                val dialog = PopupDialogue(Repository::deleteAllProducts, true)
-                dialog.show(supportFragmentManager, "yesnodialogfragment")
-            }
-
-             */
+            itemEdit.setOnClickListener{editProductPopup(it)}
 
         }
 
+        private fun editProductPopup(v:View) {
+            val position = products[adapterPosition]
+            val v = LayoutInflater.from(c).inflate(R.layout.editproductpopup_layout, null)
+            val title = v.findViewById<EditText>(R.id.editText_editTitle)
+            val qty = v.findViewById<EditText>(R.id.editText_editNumber)
+                AlertDialog.Builder(c)
+                        .setView(v)
+                        .setNegativeButton("Cancel"){
+                            dialog,_->
+                            dialog.dismiss()
+                        }
+                        .setPositiveButton("Add Changes"){
+                            dialog,_->
+                            position.name = title.text.toString()
+                            position.qty = qty.text.toString().toInt()
+                            notifyDataSetChanged()
+                            //Repository.updateProduct()
+                            Toast.makeText(c,"Your product has been updated", Toast.LENGTH_SHORT).show()
+                            dialog.dismiss()
+                        }
+                        .create()
+                        .show()
+            true
+        }
     }
-
 }

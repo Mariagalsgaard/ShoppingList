@@ -76,7 +76,6 @@
                 android:clickable="true"
                 android:contentDescription="@string/item_edit"
                 android:focusable="true"
-                android:onClick="showEditProductDialogue"
                 app:layout_constraintStart_toEndOf="@+id/textView_products"
                 app:layout_constraintTop_toTopOf="@+id/textView_products"
                 app:srcCompat="@android:drawable/ic_menu_edit" />

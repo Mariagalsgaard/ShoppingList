@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.shoppingliststartcodekotlin.R
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -35,7 +36,7 @@ object Repository {
         products.add(Product("Ice Cream"))
     }*/
 
-
+    //adding data to app and to Firebase
    fun addProduct(product:Product) {
        db = Firebase.firestore
        products.add(product)
@@ -50,7 +51,7 @@ object Repository {
                }
     }
 
-
+    //Getting data from Firebase
     private fun readDataFromFirebase() {
         val db = Firebase.firestore
         db.collection("products").get()
@@ -68,11 +69,17 @@ object Repository {
                 }
     }
 
+    fun updateProduct(product: Product, name: String, qty: String ) {
+        db = Firebase.firestore
+        db.collection("products").document(product.id)
+                .update("name", name, "qty", qty)
+    }
 
+
+        //deleting selected item from list, also in Firebase
        fun deleteProduct(index: Int) { // in the Repository
            db = Firebase.firestore
            val product = products[index]
-
 
            //delete from firebase
            db.collection("products").document(product.id).delete().addOnSuccessListener {
@@ -87,11 +94,30 @@ object Repository {
 
        }
 
+    //deleting all products on the list
+    /*fun deleteAllProducts(): MutableLiveData<MutableList<Product>>{
+        db = Firebase.firestore
+        productListener.value = products
+        for (product in products){
+            //delete from firebase
+            db.collection("products").document(product.id).delete().addOnSuccessListener {
+                Log.d("Snapshot", "DocumentSnapshot with id: ${product.id} successfully deleted!")
+            }
+                    .addOnFailureListener{e ->
+                        Log.w("Error", "Error deleting document", e) }
+
+        }
+        products.clear()
+        productListener.value = products
+        return productListener
+    }*/
+
+
 
     fun deleteAllProducts(add: Boolean) {
         db = Firebase.firestore
         val product = products.toString()
-        if (add) {
+            if (add) {
 /*
             //delete from firebase
             db.collection("products").document(product).delete().addOnSuccessListener {
@@ -99,8 +125,7 @@ object Repository {
             }
                     .addOnFailureListener{e ->
                         Log.w("Error", "Error deleting document", e) }
-
- */
+*/
 
             products.clear()
             productListener.value = products
@@ -111,6 +136,9 @@ object Repository {
     }
 
 
-    }
+
+
+}
+
 
 
