@@ -90,12 +90,11 @@ object Repository {
 
            products.removeAt(index)
            productListener.value = products
-
-
        }
 
-    //deleting all products on the list
-    /*fun deleteAllProducts(): MutableLiveData<MutableList<Product>>{
+
+    //deleting all products on the list including from Firebase
+    fun deleteAllProducts(): MutableLiveData<MutableList<Product>>{
         db = Firebase.firestore
         productListener.value = products
         for (product in products){
@@ -110,33 +109,7 @@ object Repository {
         products.clear()
         productListener.value = products
         return productListener
-    }*/
-
-
-
-    fun deleteAllProducts(add: Boolean) {
-        db = Firebase.firestore
-        val product = products.toString()
-            if (add) {
-/*
-            //delete from firebase
-            db.collection("products").document(product).delete().addOnSuccessListener {
-                Log.d("Snapshot", "DocumentSnapshot with id: $product successfully deleted!")
-            }
-                    .addOnFailureListener{e ->
-                        Log.w("Error", "Error deleting document", e) }
-*/
-
-            products.clear()
-            productListener.value = products
-
-        } else {
-            //nothing?
-        }
     }
-
-
-
 
 }
 

@@ -1,9 +1,12 @@
 package com.example.shoppingliststartcodekotlin
 
+import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -74,7 +77,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    //Callback function from add/remove dialog
+    //Callback function for adding product
     private fun addProducts(title: String, qty: Int) {
         var modify = "add"
 
@@ -87,23 +90,6 @@ class MainActivity : AppCompatActivity() {
         //Change data
         //update UI
     }
-
-/*
-    //Showing edit products dialogue
-    fun showEditProductDialogue(v: View) {
-        val dialog = EditProductDialogue(::editProducts)
-        dialog.show(supportFragmentManager, "addrangedialogfragment")
-    }
-
-    //callback function
-    private fun editProducts(product: Product) {
-
-
-        //Change data
-        //update UI
-    }
-*/
-
 
 
     //converting list to string for sharing option
@@ -151,8 +137,22 @@ class MainActivity : AppCompatActivity() {
         Log.d("icon_pressed", "${item.itemId}")
         when (item.itemId) {
             R.id.item_delete -> {
-                val dialog = PopupDialogue(::deleteAllProducts, true)
-                dialog.show(supportFragmentManager, "yesnodialogfragment")
+                //Creating an alert to delete all products using my view from layout files
+                val v = LayoutInflater.from(this).inflate(R.layout.popupdialogue_layout, null)
+                AlertDialog.Builder(this)
+                        .setView(v)
+                        .setPositiveButton("Yes"){
+                            dialog,_->
+                            deleteAllProducts()
+                            Toast.makeText(this,"Your products has all been deleted", Toast.LENGTH_SHORT).show()
+                            dialog.dismiss()
+                        }
+                        .setNegativeButton("No"){
+                            dialog,_->
+                            dialog.dismiss()
+                        }
+                        .create()
+                        .show()
                 return true
             }
             R.id.item_share -> {

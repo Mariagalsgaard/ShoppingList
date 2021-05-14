@@ -62,7 +62,6 @@ class ProductAdapter(var products: MutableList<Product>, val c: Context) : Recyc
             }
 
             itemEdit.setOnClickListener{editProductPopup(it)}
-
         }
 
         private fun editProductPopup(v:View) {
@@ -72,17 +71,17 @@ class ProductAdapter(var products: MutableList<Product>, val c: Context) : Recyc
             val qty = v.findViewById<EditText>(R.id.editText_editNumber)
                 AlertDialog.Builder(c)
                         .setView(v)
-                        .setNegativeButton("Cancel"){
-                            dialog,_->
-                            dialog.dismiss()
-                        }
-                        .setPositiveButton("Add Changes"){
+                        .setPositiveButton("Update"){
                             dialog,_->
                             position.name = title.text.toString()
                             position.qty = qty.text.toString().toInt()
                             notifyDataSetChanged()
                             //Repository.updateProduct()
                             Toast.makeText(c,"Your product has been updated", Toast.LENGTH_SHORT).show()
+                            dialog.dismiss()
+                        }
+                        .setNegativeButton("Cancel"){
+                            dialog,_->
                             dialog.dismiss()
                         }
                         .create()
