@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.addproductdialogue_layout.editText_Number1
 import kotlinx.android.synthetic.main.addproductdialogue_layout.editText_title1
 import kotlinx.android.synthetic.main.addproductdialogue_layout.view.*
 
-class AddProductDialogue(val addFunc: (String, Int) -> (Unit)) : DialogFragment() {
+class AddProductDialogue : DialogFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -53,13 +53,13 @@ class MainActivity : AppCompatActivity() {
             //so we can use both AdapterView<String> or any other
             override fun onItemSelected(adapterView: AdapterView<*>, view: View,
                                         position: Int, id: Long) {
-                //So this code is called when ever the spinner is clicked
+                //This code is called whenever the spinner is clicked
                 if(position == 0) {
-                    Log.d("sorting","title chosen")
+                    Log.d("sorting","Title chosen")
                     products.sortBy { it.name }
                     adapter.notifyDataSetChanged()
                 }else{
-                    Log.d("sorting", "Qtychosen")
+                    Log.d("sorting", "Qty chosen")
                     products.sortByDescending { it.qty }
                     adapter.notifyDataSetChanged()
                 }
@@ -70,25 +70,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
+    //Showing the add product dialog
     fun showaddproductdialogue(v: View) {
-        val dialog = AddProductDialogue(::addProducts)
-        dialog.show(supportFragmentManager, "addrangedialogfragment")
-    }
-
-
-    //Callback function for adding product
-    private fun addProducts(title: String, qty: Int) {
-        var modify = "add"
-
-        val toast = Toast.makeText(
-            this,
-            "You choose to $modify records starting from $title and ending at $qty",
-            Toast.LENGTH_LONG
-        )
-        toast.show()
-        //Change data
-        //update UI
+        val dialog = AddProductDialogue()
+        dialog.show(supportFragmentManager, "addproductfragment")
     }
 
 

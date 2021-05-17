@@ -1,5 +1,6 @@
 package com.example.shoppingliststartcodekotlin.adapters
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import com.example.shoppingliststartcodekotlin.R
 import com.example.shoppingliststartcodekotlin.data.Product
 import com.example.shoppingliststartcodekotlin.data.Repository
 import com.google.android.material.snackbar.Snackbar
+import io.grpc.InternalChannelz.id
 
 
 class ProductAdapter(var products: MutableList<Product>, val c: Context) : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
@@ -64,6 +66,7 @@ class ProductAdapter(var products: MutableList<Product>, val c: Context) : Recyc
             itemEdit.setOnClickListener{editProductPopup(it)}
         }
 
+
         private fun editProductPopup(v:View) {
             val position = products[adapterPosition]
             val v = LayoutInflater.from(c).inflate(R.layout.editproductpopup_layout, null)
@@ -76,9 +79,9 @@ class ProductAdapter(var products: MutableList<Product>, val c: Context) : Recyc
                             position.name = title.text.toString()
                             position.qty = qty.text.toString().toInt()
                             notifyDataSetChanged()
-                            //Repository.updateProduct()
-                            Toast.makeText(c,"Your product has been updated", Toast.LENGTH_SHORT).show()
+                            Repository.updateProduct(position, title.text.toString(), qty.text.toString().toInt())
                             dialog.dismiss()
+                            Toast.makeText(c,"Your product has been updated", Toast.LENGTH_SHORT).show()
                         }
                         .setNegativeButton("Cancel"){
                             dialog,_->
