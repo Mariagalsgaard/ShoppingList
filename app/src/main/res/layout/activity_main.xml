@@ -7,7 +7,6 @@
     tools:context=".MainActivity"
     android:id="@+id/main_layout">
 
-
     <TextView
         android:id="@+id/textView_remember"
         android:layout_width="wrap_content"

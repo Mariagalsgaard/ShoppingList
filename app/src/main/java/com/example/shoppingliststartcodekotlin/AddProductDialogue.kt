@@ -24,6 +24,7 @@ class AddProductDialogue : DialogFragment() {
 
         view.button_add.setOnClickListener {
            addNewProduct()
+            dismiss()
         }
 
 

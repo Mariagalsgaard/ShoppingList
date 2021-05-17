@@ -56,7 +56,6 @@ class ProductAdapter(var products: MutableList<Product>, val c: Context) : Recyc
 
                             Repository.addProduct(savedProduct)
                             val snackbar = Snackbar.make(parent, "Product has been restored", Snackbar.LENGTH_SHORT)
-
                             snackbar.show()
                         }
 

@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity() {
 
     //you need to have an Adapter for the products
     private lateinit var adapter: ProductAdapter
-    private val spinnerItems = arrayOf("Title", "Qty")
     private val RESULT_CODE_PREFERENCES = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,8 +42,10 @@ class MainActivity : AppCompatActivity() {
 
 
         //The spinner
-        val adapter1 = ArrayAdapter(this,
-                android.R.layout.simple_spinner_dropdown_item, spinnerItems)
+        val adapter1 = ArrayAdapter.createFromResource(
+            this,
+            R.array.sorting_array,
+            android.R.layout.simple_spinner_dropdown_item).also { adapter1 -> adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
 
         spinner.adapter = adapter1
 

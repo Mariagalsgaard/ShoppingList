@@ -30,4 +30,9 @@
     <string name="item_edit">edit product</string>
     <string name="edit_your_product_here">Edit your product here:</string>
     <string name="add_changes">Add Changes</string>
+
+    <string-array name="sorting_array">
+        <item>Title</item>
+        <item>Qty</item>
+    </string-array>
 </resources>
