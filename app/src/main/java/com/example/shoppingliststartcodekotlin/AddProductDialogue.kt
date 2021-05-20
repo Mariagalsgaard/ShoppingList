@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.example.shoppingliststartcodekotlin.data.Product
 import com.example.shoppingliststartcodekotlin.data.Repository
@@ -23,7 +24,7 @@ class AddProductDialogue : DialogFragment() {
         dialog?.setTitle(R.string.dialog_remove_add_title)
 
         view.button_add.setOnClickListener {
-           addNewProduct()
+            addNewProduct()
             dismiss()
         }
 
@@ -36,10 +37,11 @@ class AddProductDialogue : DialogFragment() {
     }
 
     private fun addNewProduct() {
-        val newProduct = Product(
-            name = editText_title1.text.toString(),
-            qty = editText_Number1.text.toString().toInt()
-        )
-        Repository.addProduct(newProduct)
+            val newProduct = Product(
+                name = editText_title1.text.toString(),
+                qty = editText_Number1.text.toString().toInt()
+            )
+            Repository.addProduct(newProduct)
+
     }
 }
